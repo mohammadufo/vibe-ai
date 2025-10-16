@@ -19,9 +19,9 @@ interface AgentState {
   files: { [path: string]: string }
 }
 
-export const helloWorld = inngest.createFunction(
-  { id: 'hello-world' },
-  { event: 'test/hello.world' },
+export const codeAgentFunction = inngest.createFunction(
+  { id: 'code-agent' },
+  { event: 'code-agent/run' },
   async ({ event, step }) => {
     const sandboxId = await step.run('get-sandbox-id', async () => {
       const sandbox = await Sandbox.create('vibe-nextjs-test-76125381238888')
@@ -164,10 +164,41 @@ export const helloWorld = inngest.createFunction(
 
     const result = await network.run(event.data.value)
 
+    const isError =
+      !result.state.data.summary ||
+      Object.keys(result.state.data.files || {}).length === 0
+
     const sandboxUrl = await step.run('get-sandbox-url', async () => {
       const sandbox = await getSandbox(sandboxId)
       const host = sandbox.getHost(3000)
       return `https://${host}`
+    })
+
+    await step.run('save-result', async () => {
+      if (isError) {
+        return await prisma.message.create({
+          data: {
+            content: 'Something went wrong. Please try again.',
+            role: 'ASSISTANT',
+            type: 'ERROR',
+          },
+        })
+      }
+
+      return await prisma.message.create({
+        data: {
+          content: result.state.data.summary,
+          role: 'ASSISTANT',
+          type: 'RESULT',
+          fragment: {
+            create: {
+              sandboxUrl,
+              title: 'Fragment',
+              files: result.state.data.files,
+            },
+          },
+        },
+      })
     })
 
     return {
