@@ -21,7 +21,9 @@ const page = () => {
   return (
     <div className="font-bold text-red-500 m-10">
       <Input value={value} onChange={(e) => setValue(e.target.value)} />
-      <Button onClick={() => invoke.mutate({ value })}>I love Alaa</Button>
+      <Button onClick={() => invoke.mutate({ value })}>
+        Invoke background job!
+      </Button>
     </div>
   )
 }
