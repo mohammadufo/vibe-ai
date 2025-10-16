@@ -17,7 +17,7 @@ const Page = () => {
     trpc.projects.create.mutationOptions({
       onSuccess: (data) => {
         toast.success('Project created!')
-        router.push(`/project/${data?.id}`)
+        router.push(`/projects/${data?.id}`)
       },
       onError: (err) => {
         toast.error(err.message)
