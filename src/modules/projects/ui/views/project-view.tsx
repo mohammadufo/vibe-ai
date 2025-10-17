@@ -9,13 +9,18 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui/resizable'
 import { MessagesContainer } from '../components/messages-container'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
+import { Fragment } from '@/generated/prisma'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ProjectHeader } from '../components/project-header'
 
 interface Props {
   projectId: string
 }
 
 export const ProjectView = ({ projectId }: Props) => {
+  const [activeFragment, setActiveFragment] = useState<Fragment | null>(null)
+
   //   const trpc = useTRPC()
 
   //   const { data: project } = useSuspenseQuery(
@@ -30,8 +35,17 @@ export const ProjectView = ({ projectId }: Props) => {
           minSize={20}
           className="flex flex-col min-h-0"
         >
+          <ErrorBoundary fallback={<p>Project header error</p>}>
+            <Suspense fallback={<p>Loading project...</p>}>
+              <ProjectHeader projectId={projectId} />
+            </Suspense>
+          </ErrorBoundary>
           <Suspense fallback={<p>loading messages ...</p>}>
-            <MessagesContainer projectId={projectId} />
+            <MessagesContainer
+              projectId={projectId}
+              activeFragment={activeFragment}
+              setActiveFragment={setActiveFragment}
+            />
           </Suspense>
         </ResizablePanel>
         <ResizableHandle
@@ -39,7 +53,6 @@ export const ProjectView = ({ projectId }: Props) => {
           className="hover:bg-primary transition-colors"
         />
         <ResizablePanel defaultSize={65} minSize={50}>
-          {/* {JSON.stringify(project)} */}
           projects ...
         </ResizablePanel>
       </ResizablePanelGroup>
