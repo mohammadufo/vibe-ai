@@ -40,7 +40,7 @@ export const Usage = ({ points, msBeforeNext }: Props) => {
           <p className="text-xs text-muted-foreground">Resets in {resetTime}</p>
         </div>
         {!hasProAccess && (
-          <Button asChild size="sm" variant="outline" className="ml-auto">
+          <Button asChild size="sm" className="ml-auto" variant="tertiary">
             <Link href="/pricing">
               <CrownIcon /> Upgrade
             </Link>
