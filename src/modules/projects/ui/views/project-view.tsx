@@ -13,6 +13,7 @@ import { Suspense, useState } from 'react'
 import { Fragment } from '@/generated/prisma'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ProjectHeader } from '../components/project-header'
+import { FragmentWeb } from '../components/fragment-component'
 
 interface Props {
   projectId: string
@@ -53,7 +54,7 @@ export const ProjectView = ({ projectId }: Props) => {
           className="hover:bg-primary transition-colors"
         />
         <ResizablePanel defaultSize={65} minSize={50}>
-          projects ...
+          {activeFragment && <FragmentWeb data={activeFragment} />}
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
