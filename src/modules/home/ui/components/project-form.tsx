@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TextareaAutosize from 'react-textarea-autosize'
 import { ArrowUpIcon, Loader2Icon } from 'lucide-react'
+import { useClerk } from '@clerk/nextjs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { cn } from '@/lib/utils'
@@ -28,6 +29,8 @@ export const ProjectForm = () => {
   const router = useRouter()
   const trpc = useTRPC()
   const queryClient = useQueryClient()
+  const clerk = useClerk()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,6 +46,10 @@ export const ProjectForm = () => {
       },
       onError: (error) => {
         toast.error(error.message)
+
+        if (error.data?.code === 'UNAUTHORIZED') {
+          clerk.openSignIn()
+        }
 
         if (error.data?.code === 'TOO_MANY_REQUESTS') {
           router.push('/pricing')

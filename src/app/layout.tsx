@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
-
+import { ClerkProvider } from '@clerk/nextjs'
 import { TRPCReactProvider } from '@/trpc/client'
 import { Toaster } from '@/components/ui/sonner'
 
@@ -28,17 +28,25 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <TRPCReactProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Toaster />
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
-    </TRPCReactProvider>
+    <ClerkProvider
+      appearance={{
+        variables: {
+          colorPrimary: '#C96342',
+        },
+      }}
+    >
+      <TRPCReactProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <Toaster />
+              {children}
+            </ThemeProvider>
+          </body>
+        </html>
+      </TRPCReactProvider>
+    </ClerkProvider>
   )
 }
