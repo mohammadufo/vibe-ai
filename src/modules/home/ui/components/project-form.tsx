@@ -3,12 +3,12 @@
 import { z } from 'zod'
 import { toast } from 'sonner'
 import { useState } from 'react'
+import { useClerk } from '@clerk/nextjs'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TextareaAutosize from 'react-textarea-autosize'
 import { ArrowUpIcon, Loader2Icon } from 'lucide-react'
-import { useClerk } from '@clerk/nextjs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { cn } from '@/lib/utils'
@@ -28,9 +28,8 @@ const formSchema = z.object({
 export const ProjectForm = () => {
   const router = useRouter()
   const trpc = useTRPC()
-  const queryClient = useQueryClient()
   const clerk = useClerk()
-
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,6 +41,7 @@ export const ProjectForm = () => {
     trpc.projects.create.mutationOptions({
       onSuccess: (data) => {
         queryClient.invalidateQueries(trpc.projects.getMany.queryOptions())
+        queryClient.invalidateQueries(trpc.usage.status.queryOptions())
         router.push(`/projects/${data.id}`)
       },
       onError: (error) => {
