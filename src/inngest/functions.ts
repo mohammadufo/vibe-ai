@@ -31,7 +31,7 @@ export const codeAgentFunction = inngest.createFunction(
   { event: 'code-agent/run' },
   async ({ event, step }) => {
     const sandboxId = await step.run('get-sandbox-id', async () => {
-      const sandbox = await Sandbox.create('vibe-nextjs-test-2')
+      const sandbox = await Sandbox.create('vibe-nextjs-test-76125381238888')
       await sandbox.setTimeout(SANDBOX_TIMEOUT)
       return sandbox.sandboxId
     })
