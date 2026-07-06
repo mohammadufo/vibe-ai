@@ -60,7 +60,7 @@ export const codeAgentFunction = inngest.createFunction(
         }
 
         return formattedMessages.reverse()
-      }
+      },
     )
 
     const state = createState<AgentState>(
@@ -70,7 +70,7 @@ export const codeAgentFunction = inngest.createFunction(
       },
       {
         messages: previousMessages,
-      }
+      },
     )
 
     const codeAgent = createAgent<AgentState>({
@@ -107,7 +107,7 @@ export const codeAgentFunction = inngest.createFunction(
                 return result.stdout
               } catch (e) {
                 console.error(
-                  `Command failed: ${e} \nstdout: ${buffers.stdout}\nstderror: ${buffers.stderr}`
+                  `Command failed: ${e} \nstdout: ${buffers.stdout}\nstderror: ${buffers.stderr}`,
                 )
                 return `Command failed: ${e} \nstdout: ${buffers.stdout}\nstderr: ${buffers.stderr}`
               }
@@ -122,12 +122,12 @@ export const codeAgentFunction = inngest.createFunction(
               z.object({
                 path: z.string(),
                 content: z.string(),
-              })
+              }),
             ),
           }),
           handler: async (
             { files },
-            { step, network }: Tool.Options<AgentState>
+            { step, network }: Tool.Options<AgentState>,
           ) => {
             const newFiles = await step?.run(
               'createOrUpdateFiles',
@@ -144,7 +144,7 @@ export const codeAgentFunction = inngest.createFunction(
                 } catch (e) {
                   return 'Error: ' + e
                 }
-              }
+              },
             )
 
             if (typeof newFiles === 'object') {
@@ -228,10 +228,10 @@ export const codeAgentFunction = inngest.createFunction(
     })
 
     const { output: fragmentTitleOuput } = await fragmentTitleGenerator.run(
-      result.state.data.summary
+      result.state.data.summary,
     )
     const { output: responseOutput } = await responseGenerator.run(
-      result.state.data.summary
+      result.state.data.summary,
     )
 
     const isError =
@@ -279,5 +279,5 @@ export const codeAgentFunction = inngest.createFunction(
       files: result.state.data.files,
       summary: result.state.data.summary,
     }
-  }
+  },
 )
