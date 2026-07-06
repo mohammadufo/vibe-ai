@@ -1,4 +1,4 @@
-import { CopyCheckIcon, CopyIcon } from 'lucide-react'
+import { CopyCheckIcon, CopyIcon, FileIcon } from 'lucide-react'
 import { useState, useMemo, useCallback, Fragment } from 'react'
 
 import { Hint } from '@/components/hint'
@@ -131,25 +131,29 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
           onSelect={handleFileSelect}
         />
       </ResizablePanel>
-      <ResizableHandle className="hover:bg-primary transition-colors" />
+      <ResizableHandle className="w-px bg-border transition-colors hover:bg-primary data-[resize-handle-state=drag]:bg-primary" />
       <ResizablePanel defaultSize={70} minSize={50}>
         {selectedFile && files[selectedFile] ? (
           <div className="h-full w-full flex flex-col">
-            <div className="border-b bg-sidebar px-4 py-2 flex justify-between items-center gap-x-2">
+            <div className="border-b bg-sidebar/80 backdrop-blur-sm px-4 py-2 flex justify-between items-center gap-x-2">
               <FileBreadcrumb filePath={selectedFile} />
               <Hint text="Copy to clipboard" side="bottom">
                 <Button
                   variant="outline"
                   size="icon"
-                  className="ml-auto"
+                  className="ml-auto transition-colors hover:border-primary/50 hover:text-primary disabled:opacity-100"
                   onClick={handleCopy}
                   disabled={copied}
                 >
-                  {copied ? <CopyCheckIcon /> : <CopyIcon />}
+                  {copied ? (
+                    <CopyCheckIcon className="text-emerald-500" />
+                  ) : (
+                    <CopyIcon />
+                  )}
                 </Button>
               </Hint>
             </div>
-            <div className="flex-1 overflow-auto">
+            <div className="flex-1 overflow-auto fancy-scrollbar animate-fade-in">
               <CodeView
                 code={files[selectedFile]}
                 lang={getLanguageFromExtension(selectedFile)}
@@ -157,8 +161,9 @@ export const FileExplorer = ({ files }: FileExplorerProps) => {
             </div>
           </div>
         ) : (
-          <div className="flex h-full items-center justify-center text-muted-foreground">
-            Select a file to view it&apos;s content
+          <div className="flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+            <FileIcon className="size-8 opacity-40" />
+            <p className="text-sm">Select a file to view its content</p>
           </div>
         )}
       </ResizablePanel>

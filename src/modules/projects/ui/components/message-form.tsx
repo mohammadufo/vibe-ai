@@ -79,58 +79,75 @@ export const MessageForm = ({ projectId }: Props) => {
           msBeforeNext={usage.msBeforeNext}
         />
       )}
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
+      <div
         className={cn(
-          'relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all',
-          isFocused && 'shadow-xs',
+          'group relative rounded-2xl p-[1.5px] transition-all duration-500',
+          isFocused
+            ? 'bg-gradient-to-r from-primary/70 via-primary/30 to-primary/70'
+            : 'bg-border/60',
           showUsage && 'rounded-t-none'
         )}
       >
-        <FormField
-          control={form.control}
-          name="value"
-          render={({ field }) => (
-            <TextareaAutosize
-              {...field}
-              disabled={isPending}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              minRows={2}
-              maxRows={8}
-              className="pt-4 resize-none border-none w-full outline-none bg-transparent"
-              placeholder="What would you like to build?"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                  e.preventDefault()
-                  form.handleSubmit(onSubmit)(e)
-                }
-              }}
-            />
+        <div
+          className={cn(
+            'pointer-events-none absolute -inset-2 -z-10 rounded-3xl bg-primary/20 blur-xl transition-opacity duration-500',
+            isFocused ? 'opacity-100' : 'opacity-0'
           )}
         />
-        <div className="flex gap-x-2 items-end justify-between pt-2">
-          <div className="text-[10px] text-muted-foreground font-mono">
-            <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-              <span>&#8984;</span>Enter
-            </kbd>
-            &nbsp;to submit
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={cn(
+            'relative rounded-2xl bg-sidebar dark:bg-sidebar p-4 pt-1 transition-all',
+            showUsage && 'rounded-t-none'
+          )}
+        >
+          <FormField
+            control={form.control}
+            name="value"
+            render={({ field }) => (
+              <TextareaAutosize
+                {...field}
+                disabled={isPending}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
+                minRows={2}
+                maxRows={8}
+                className="pt-4 resize-none border-none w-full outline-none bg-transparent placeholder:text-muted-foreground/70"
+                placeholder="What would you like to build?"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault()
+                    form.handleSubmit(onSubmit)(e)
+                  }
+                }}
+              />
+            )}
+          />
+          <div className="flex gap-x-2 items-end justify-between pt-2">
+            <div className="text-[10px] text-muted-foreground font-mono">
+              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                <span>&#8984;</span>Enter
+              </kbd>
+              &nbsp;to submit
+            </div>
+            <Button
+              disabled={isButtonDisabled}
+              className={cn(
+                'size-9 rounded-full transition-all duration-300 sheen',
+                isButtonDisabled
+                  ? 'bg-muted-foreground border'
+                  : 'hover:scale-105 hover:glow-primary active:scale-95'
+              )}
+            >
+              {isPending ? (
+                <Loader2Icon className="size-4 animate-spin" />
+              ) : (
+                <ArrowUpIcon />
+              )}
+            </Button>
           </div>
-          <Button
-            disabled={isButtonDisabled}
-            className={cn(
-              'size-8 rounded-full',
-              isButtonDisabled && 'bg-muted-foreground border'
-            )}
-          >
-            {isPending ? (
-              <Loader2Icon className="size-4 animate-spin" />
-            ) : (
-              <ArrowUpIcon />
-            )}
-          </Button>
-        </div>
-      </form>
+        </form>
+      </div>
     </Form>
   )
 }

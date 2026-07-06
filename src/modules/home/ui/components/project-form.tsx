@@ -55,7 +55,7 @@ export const ProjectForm = () => {
           router.push('/pricing')
         }
       },
-    })
+    }),
   )
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -79,67 +79,82 @@ export const ProjectForm = () => {
   return (
     <Form {...form}>
       <section className="space-y-6">
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
+        <div
           className={cn(
-            'relative border p-4 pt-1 rounded-xl bg-sidebar dark:bg-sidebar transition-all',
-            isFocused && 'shadow-xs'
+            'group relative rounded-2xl p-[1.5px] transition-all duration-500',
+            isFocused
+              ? 'bg-gradient-to-r from-primary/70 via-primary/30 to-primary/70'
+              : 'bg-border/60',
           )}
         >
-          <FormField
-            control={form.control}
-            name="value"
-            render={({ field }) => (
-              <TextareaAutosize
-                {...field}
-                disabled={isPending}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                minRows={2}
-                maxRows={8}
-                className="pt-4 resize-none border-none w-full outline-none bg-transparent"
-                placeholder="What would you like to build?"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                    e.preventDefault()
-                    form.handleSubmit(onSubmit)(e)
-                  }
-                }}
-              />
+          <div
+            className={cn(
+              'pointer-events-none absolute -inset-2 -z-10 rounded-3xl bg-primary/20 blur-xl transition-opacity duration-500',
+              isFocused ? 'opacity-100' : 'opacity-0',
             )}
           />
-          <div className="flex gap-x-2 items-end justify-between pt-2">
-            <div className="text-[10px] text-muted-foreground font-mono">
-              <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-                <span>&#8984;</span>Enter
-              </kbd>
-              &nbsp;to submit
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="relative rounded-2xl bg-sidebar dark:bg-sidebar p-4 pt-1 transition-all"
+          >
+            <FormField
+              control={form.control}
+              name="value"
+              render={({ field }) => (
+                <TextareaAutosize
+                  {...field}
+                  disabled={isPending}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  minRows={2}
+                  maxRows={8}
+                  className="pt-4 resize-none border-none w-full outline-none bg-transparent placeholder:text-muted-foreground/70"
+                  placeholder="What would you like to build?"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                      e.preventDefault()
+                      form.handleSubmit(onSubmit)(e)
+                    }
+                  }}
+                />
+              )}
+            />
+            <div className="flex gap-x-2 items-end justify-between pt-2">
+              <div className="text-[10px] text-muted-foreground font-mono">
+                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                  <span>&#8984;</span>Enter
+                </kbd>
+                &nbsp;to submit
+              </div>
+              <Button
+                disabled={isButtonDisabled}
+                className={cn(
+                  'size-9 rounded-full transition-all duration-300 sheen',
+                  isButtonDisabled
+                    ? 'bg-muted-foreground border'
+                    : 'hover:scale-105 hover:glow-primary active:scale-95',
+                )}
+              >
+                {isPending ? (
+                  <Loader2Icon className="size-4 animate-spin" />
+                ) : (
+                  <ArrowUpIcon />
+                )}
+              </Button>
             </div>
-            <Button
-              disabled={isButtonDisabled}
-              className={cn(
-                'size-8 rounded-full',
-                isButtonDisabled && 'bg-muted-foreground border'
-              )}
-            >
-              {isPending ? (
-                <Loader2Icon className="size-4 animate-spin" />
-              ) : (
-                <ArrowUpIcon />
-              )}
-            </Button>
-          </div>
-        </form>
-        <div className="flex-wrap justify-center gap-2 hidden md:flex max-w-3xl">
-          {PROJECT_TEMPLATES.map((template) => (
+          </form>
+        </div>
+        <div className="flex-wrap justify-center gap-2 hidden md:flex max-w-3xl mx-auto">
+          {PROJECT_TEMPLATES.map((template, i) => (
             <Button
               key={template.title}
               variant="outline"
               size="sm"
-              className="bg-white dark:bg-sidebar"
+              className="rounded-full bg-background/60 backdrop-blur-sm border-border/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50 hover:bg-background hover:text-primary hover:shadow-sm animate-fade-in-up"
+              style={{ animationDelay: `${240 + i * 60}ms` }}
               onClick={() => onSelect(template.prompt)}
             >
-              {template.emoji} {template.title}
+              <span className="mr-1">{template.emoji}</span> {template.title}
             </Button>
           ))}
         </div>

@@ -33,17 +33,26 @@ export const ProjectHeader = ({ projectId }: Props) => {
   const { setTheme, theme } = useTheme()
 
   return (
-    <header className="p-2 flex justify-between items-center border-b">
+    <header className="p-2 flex justify-between items-center border-b bg-sidebar/60 backdrop-blur-sm">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="sm"
-            className="focus-visible:ring-0 hover:bg-transparent hover:opacity-75 transition-opacity pl-2!"
+            className="group focus-visible:ring-0 hover:bg-accent/60 transition-all pl-2! rounded-lg"
           >
-            <Image src="/logo.svg" alt="Vibe" width={18} height={18} />
+            <div className="relative flex items-center justify-center">
+              <span className="absolute inset-0 rounded-full bg-primary/40 blur-sm opacity-0 transition-opacity group-hover:opacity-100" />
+              <Image
+                src="/logo.svg"
+                alt="Vibe"
+                width={18}
+                height={18}
+                className="relative"
+              />
+            </div>
             <span className="text-sm font-medium">{project.name}</span>
-            <ChevronDownIcon />
+            <ChevronDownIcon className="transition-transform group-data-[state=open]:rotate-180" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="bottom" align="start">

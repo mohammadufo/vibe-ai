@@ -63,22 +63,20 @@ const Tree = ({ item, selectedValue, onSelect, parentPath }: TreeProps) => {
   const currentPath = parentPath ? `${parentPath}/${name}` : name
 
   if (!items.length) {
-    // It's a file
     const isSelected = selectedValue === currentPath
 
     return (
       <SidebarMenuButton
         isActive={isSelected}
-        className="data-[active=true]:bg-transparent"
+        className="transition-colors data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-medium"
         onClick={() => onSelect?.(currentPath)}
       >
-        <FileIcon />
+        <FileIcon className="text-muted-foreground" />
         <span className="truncate">{name}</span>
       </SidebarMenuButton>
     )
   }
 
-  // It's a folder
   return (
     <SidebarMenuItem>
       <Collapsible
@@ -86,10 +84,10 @@ const Tree = ({ item, selectedValue, onSelect, parentPath }: TreeProps) => {
         defaultOpen
       >
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton>
-            <ChevronRightIcon className="transition-transform" />
-            <FolderIcon />
-            <span className="truncate">{name}</span>
+          <SidebarMenuButton className="transition-colors">
+            <ChevronRightIcon className="transition-transform text-muted-foreground" />
+            <FolderIcon className="text-primary/70 fill-primary/10" />
+            <span className="truncate font-medium">{name}</span>
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>

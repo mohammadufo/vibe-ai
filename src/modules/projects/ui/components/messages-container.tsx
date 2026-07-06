@@ -50,16 +50,18 @@ export const MessagesContainer = ({
   }, [messages, setActiveFragment])
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView()
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages.length])
 
   const lastMessage = messages[messages.length - 1]
   const isLastMessageUser = lastMessage?.role === 'USER'
 
   return (
-    <div className="flex flex-col flex-1 min-h-0">
-      <div className="flex-1 min-h-0 overflow-y-auto">
-        <div className="pt-2 pr-1">
+    <div className="flex flex-col flex-1 min-h-0 relative">
+      {/* Top fade so messages dissolve under the header */}
+      <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-6 bg-gradient-to-b from-background to-transparent" />
+      <div className="flex-1 min-h-0 overflow-y-auto fancy-scrollbar">
+        <div className="pt-4 pr-1">
           {messages.map((message) => (
             <MessageCard
               key={message.id}
@@ -77,7 +79,7 @@ export const MessagesContainer = ({
         </div>
       </div>
       <div className="relative p-3 pt-1">
-        <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-b from-transparent to-background pointer-events-none" />
+        <div className="absolute -top-8 left-0 right-0 h-8 bg-gradient-to-b from-transparent to-background pointer-events-none" />
         <MessageForm projectId={projectId} />
       </div>
     </div>

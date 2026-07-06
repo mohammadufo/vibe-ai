@@ -25,8 +25,20 @@ const ShimmerMessages = () => {
   }, [messages.length])
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-base text-muted-foreground animate-pulse">
+    <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-1">
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className="size-1.5 rounded-full bg-primary animate-bounce-dot"
+            style={{ animationDelay: `${i * 0.16}s` }}
+          />
+        ))}
+      </div>
+      <span
+        key={currentMessageIndex}
+        className="animate-fade-in bg-[linear-gradient(90deg,var(--muted-foreground)_0%,var(--foreground)_50%,var(--muted-foreground)_100%)] bg-[length:200%_100%] bg-clip-text text-base text-transparent animate-shimmer"
+      >
         {messages[currentMessageIndex]}
       </span>
     </div>
@@ -35,15 +47,18 @@ const ShimmerMessages = () => {
 
 export const MessageLoading = () => {
   return (
-    <div className="flex flex-col group px-2 pb-4">
+    <div className="flex flex-col group px-2 pb-4 animate-fade-in-up">
       <div className="flex items-center gap-2 pl-2 mb-2">
-        <Image
-          src="/logo.svg"
-          alt="Vibe"
-          width={18}
-          height={18}
-          className="shrink-0"
-        />
+        <div className="relative flex items-center justify-center">
+          <span className="absolute inset-0 rounded-full bg-primary/40 blur-sm animate-glow-pulse" />
+          <Image
+            src="/logo.svg"
+            alt="Vibe"
+            width={18}
+            height={18}
+            className="relative shrink-0 animate-float"
+          />
+        </div>
         <span className="text-sm font-medium">Vibe</span>
       </div>
       <div className="pl-8.5 flex flex-col gap-y-4">
