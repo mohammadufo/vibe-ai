@@ -46,29 +46,29 @@ export const AuroraBackground = ({ className }: Props) => {
         }}
       />
 
-      {/* Full-page dot grid */}
+      {/* Full-page dot grid — fine and soft */}
       <div
-        className="absolute inset-0 h-full w-full opacity-45 dark:opacity-70 [background-size:24px_24px]"
+        className="absolute inset-0 h-full w-full opacity-30 dark:opacity-40 [background-size:30px_30px]"
         style={{
           backgroundImage:
-            'radial-gradient(circle, color-mix(in oklch, var(--primary) 55%, var(--muted-foreground)) 2px, transparent 2px)',
+            'radial-gradient(circle, color-mix(in oklch, var(--primary) 40%, var(--muted-foreground)) 1px, transparent 1.5px)',
           maskImage:
-            'radial-gradient(ellipse 130% 110% at 50% 35%, black 60%, transparent 100%)',
+            'radial-gradient(ellipse 130% 110% at 50% 35%, black 55%, transparent 100%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse 130% 110% at 50% 35%, black 60%, transparent 100%)',
+            'radial-gradient(ellipse 130% 110% at 50% 35%, black 55%, transparent 100%)',
         }}
       />
 
-      {/* Brighter dot layer glowing near the hero */}
+      {/* Subtle brighter dots gently glowing near the hero */}
       <div
-        className="absolute inset-0 h-full w-full animate-glow-pulse [background-size:24px_24px]"
+        className="absolute inset-0 h-full w-full animate-glow-pulse opacity-50 [background-size:30px_30px]"
         style={{
           backgroundImage:
-            'radial-gradient(circle, var(--primary) 2px, transparent 2px)',
+            'radial-gradient(circle, color-mix(in oklch, var(--primary) 70%, transparent) 1px, transparent 1.5px)',
           maskImage:
-            'radial-gradient(ellipse 45% 40% at 50% 28%, black 20%, transparent 100%)',
+            'radial-gradient(ellipse 40% 34% at 50% 28%, black 10%, transparent 100%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse 45% 40% at 50% 28%, black 20%, transparent 100%)',
+            'radial-gradient(ellipse 40% 34% at 50% 28%, black 10%, transparent 100%)',
         }}
       />
 
