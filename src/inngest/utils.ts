@@ -25,7 +25,7 @@ export function lastAssistantTextMessageContent(result: AgentResult) {
 export const parseAgentOutput = (value: Message[]) => {
   const output = value[0]
 
-  if (output.type !== 'text') {
+  if (!output || output.type !== 'text') {
     return 'Fragment'
   }
 
