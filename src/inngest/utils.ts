@@ -30,7 +30,7 @@ export const parseAgentOutput = (value: Message[]) => {
   }
 
   if (Array.isArray(output.content)) {
-    return output.content.map((txt) => txt).join('')
+    return output.content.map((txt) => txt.text).join('')
   } else {
     return output.content
   }
