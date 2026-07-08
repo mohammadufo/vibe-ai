@@ -37,9 +37,9 @@ export default function RootLayout({
       }}
     >
       <TRPCReactProvider>
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" suppressHydrationWarning className="bg-background">
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
           >
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <Toaster />
