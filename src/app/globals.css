@@ -181,7 +181,8 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    /* Background lives on <html>; keeping body transparent lets fixed -z-10 backgrounds (dot grid, aurora) show through */
+    @apply bg-transparent text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;

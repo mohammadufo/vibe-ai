@@ -37,14 +37,38 @@ export const AuroraBackground = ({ className }: Props) => {
       {/* Base */}
       <div className="absolute inset-0 bg-background" />
 
-      {/* Dot grid, masked so it fades toward the edges */}
+      {/* Warm ambient wash across the whole page */}
       <div
-        className="absolute inset-0 h-full w-full dark:bg-[radial-gradient(#393e4a_1px,transparent_1px)] bg-[radial-gradient(#dadde2_1px,transparent_1px)] [background-size:18px_18px]"
+        className="absolute inset-0 opacity-50 dark:opacity-100"
         style={{
+          background:
+            'radial-gradient(ellipse 120% 90% at 50% 20%, color-mix(in oklch, var(--primary) 14%, transparent), transparent 65%), radial-gradient(ellipse 80% 60% at 85% 80%, color-mix(in oklch, var(--accent-warm) 8%, transparent), transparent 70%), radial-gradient(ellipse 80% 60% at 10% 90%, color-mix(in oklch, var(--accent-rose) 7%, transparent), transparent 70%)',
+        }}
+      />
+
+      {/* Full-page dot grid */}
+      <div
+        className="absolute inset-0 h-full w-full opacity-45 dark:opacity-70 [background-size:24px_24px]"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle, color-mix(in oklch, var(--primary) 55%, var(--muted-foreground)) 2px, transparent 2px)',
           maskImage:
-            'radial-gradient(ellipse 90% 70% at 50% 30%, black 30%, transparent 100%)',
+            'radial-gradient(ellipse 130% 110% at 50% 35%, black 60%, transparent 100%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse 90% 70% at 50% 30%, black 30%, transparent 100%)',
+            'radial-gradient(ellipse 130% 110% at 50% 35%, black 60%, transparent 100%)',
+        }}
+      />
+
+      {/* Brighter dot layer glowing near the hero */}
+      <div
+        className="absolute inset-0 h-full w-full animate-glow-pulse [background-size:24px_24px]"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle, var(--primary) 2px, transparent 2px)',
+          maskImage:
+            'radial-gradient(ellipse 45% 40% at 50% 28%, black 20%, transparent 100%)',
+          WebkitMaskImage:
+            'radial-gradient(ellipse 45% 40% at 50% 28%, black 20%, transparent 100%)',
         }}
       />
 
@@ -69,13 +93,13 @@ export const AuroraBackground = ({ className }: Props) => {
       />
 
       {/* Aurora orbs */}
-      <div className="absolute -top-40 left-1/4 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-primary/30 blur-[120px] animate-aurora" />
+      <div className="absolute -top-40 left-1/4 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-primary/15 dark:bg-primary/30 blur-[120px] animate-aurora" />
       <div
-        className="absolute top-10 right-0 h-[34rem] w-[34rem] rounded-full bg-accent-rose/25 blur-[120px] animate-aurora"
+        className="absolute top-10 right-0 h-[34rem] w-[34rem] rounded-full bg-accent-rose/10 dark:bg-accent-rose/25 blur-[120px] animate-aurora"
         style={{ animationDelay: '-6s', animationDuration: '22s' }}
       />
       <div
-        className="absolute bottom-0 left-10 h-[30rem] w-[30rem] rounded-full bg-accent-warm/25 blur-[110px] animate-aurora"
+        className="absolute bottom-0 left-10 h-[30rem] w-[30rem] rounded-full bg-accent-warm/10 dark:bg-accent-warm/25 blur-[110px] animate-aurora"
         style={{ animationDelay: '-12s', animationDuration: '26s' }}
       />
 
