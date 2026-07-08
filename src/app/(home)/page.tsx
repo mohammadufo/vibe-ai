@@ -44,6 +44,12 @@ const Page = () => {
           <ProjectForm />
         </div>
       </section>
+
+      <div
+        aria-hidden
+        className="mx-auto mb-10 h-px w-full max-w-3xl bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+      />
+
       <ProjectsList />
     </div>
   )

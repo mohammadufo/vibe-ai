@@ -1,3 +1,5 @@
+import { HeartIcon } from 'lucide-react'
+
 import { Navbar } from '@/modules/home/ui/components/navbar'
 import { AuroraBackground } from '@/components/aurora-background'
 
@@ -17,9 +19,10 @@ const Layout = ({ children }: Props) => {
 
       <p className="text-xs w-full flex justify-center items-center py-2.5 bg-transparent text-muted-foreground">
         Created with{' '}
-        <span className="mx-1 inline-block animate-glow-pulse text-primary">
-          🤍
-        </span>{' '}
+        <HeartIcon
+          aria-label="love"
+          className="mx-1 inline-block size-3.5 animate-glow-pulse fill-primary text-primary"
+        />{' '}
         by
         <a
           href="https://github.com/mohammadufo"
