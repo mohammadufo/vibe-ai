@@ -156,7 +156,7 @@ importers:
         specifier: ^0.1.7
         version: 0.1.7
       rate-limiter-flexible:
-        specifier: ^7.1.1
+        specifier: 7.1.1
         version: 7.1.1
       react:
         specifier: ^19.0.0
